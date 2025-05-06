@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TunisiaLive</string>
+    <string name="default_web_client_id">821821543440-4lifdbir7ohnrnibsbh3fe55edrh135s.apps.googleusercontent.com
+</string>
+    <string name="client_id">821821543440-4lifdbir7ohnrnibsbh3fe55edrh135s.apps.googleusercontent.com
+
+</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string-array name="rss_sources">
+        <item>Mosaique FM</item>
+        <item>Tuniscope</item>
+        <item>BBC News</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "821821543440",
+    "project_id": "tunisialive-21eeb",
+    "storage_bucket": "tunisialive-21eeb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821821543440:android:8dfbb6ffc9553e3b446695",
+        "android_client_info": {
+          "package_name": "com.example.tunisialive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "821821543440-1o6da4brv0pqsa3e9jhpo4u5chh1oqnf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tunisialive",
+            "certificate_hash": "32aadd5f232e354ad2236005b81b9558f7b35452"
+          }
+        },
+        {
+          "client_id": "821821543440-4lifdbir7ohnrnibsbh3fe55edrh135s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0QtYbZjGpcUrVjGsPIPXv0k7wuoQc-qs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "821821543440-4lifdbir7ohnrnibsbh3fe55edrh135s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
