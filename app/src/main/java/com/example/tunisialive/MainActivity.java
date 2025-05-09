@@ -36,6 +36,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import androidx.appcompat.widget.SearchView;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
+import java.util.concurrent.TimeUnit;
+
+
+
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private RecyclerView recyclerView;
     private NewsAdapter adapter;
@@ -219,6 +227,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         articleAdapter.notifyDataSetChanged();
+        PeriodicWorkRequest workRequest =
+                new PeriodicWorkRequest.Builder(RssWorker.class, 15, TimeUnit.MINUTES) // 15 min est le min autorisé
+                        .build();
+
+        WorkManager.getInstance(this).enqueue(workRequest);
     }
 
 

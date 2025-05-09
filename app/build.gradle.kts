@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.credentials)
     implementation(libs.credentials.play.services.auth)
     implementation(libs.googleid)
+    implementation(libs.work.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -97,7 +98,10 @@ dependencies {
             // Lifecycle components
             implementation ("androidx.lifecycle:lifecycle-viewmodel:2.4.0")
             implementation ("androidx.lifecycle:lifecycle-livedata:2.4.0")
-            implementation ("androidx.lifecycle:lifecycle-common-java8:2.4.0")}}
+            implementation ("androidx.lifecycle:lifecycle-common-java8:2.4.0")
+            //les dépendances pour WorkManager
+            implementation ("androidx.work:work-runtime:2.9.0")
+        }}
 
     // Optional: If you need HTML text view
     // implementation("org.sufficientlysecure:html-textview:4.0")
