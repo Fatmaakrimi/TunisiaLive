@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class NewsItem {
 
     @Element(name = "title")
-    private String title;
+    private String title = "";
 
     @Element(name = "link")
     private String link;
@@ -28,6 +28,8 @@ public class NewsItem {
     @Element(name = "pubDate", required = false)
     private String pubDate;
 
+    @Element(name = "category", required = false)
+    private String category;
 
     @Element(name = "enclosure", required = false)
     private Enclosure enclosure;
@@ -37,38 +39,56 @@ public class NewsItem {
 
     @Element(name = "thumbnail", required = false)
     private MediaThumbnail mediaThumbnail;
+
     @Namespace(reference = "http://purl.org/rss/1.0/modules/content/")
     @Element(name = "encoded", required = false)
     private String contentEncoded;
-    public String getTitle() { return title; }
-    public String getLink() { return link; }
-    public String getDescription() { return description; }
-    //public String getPubDate() { return pubDate; }
+
+    // --- GETTERS ---
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public Date getPubDate() {
         SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
         try {
             return format.parse(pubDate);
         } catch (ParseException e) {
             e.printStackTrace();
-            return new Date(0); // Retourne une date par défaut en cas d'erreur
+            return new Date(0);
         }
     }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getContentEncoded() {
+        return contentEncoded;
+    }
+
     public String getImageUrlFromDescription() {
         if (description == null) return null;
 
-        // Expression régulière pour extraire l'URL de l'image
         Pattern pattern = Pattern.compile("<img[^>]+src=\"([^\"]+)\"");
         Matcher matcher = pattern.matcher(description);
 
         if (matcher.find()) {
-            return matcher.group(1); // Retourne l'URL de l'image
+            return matcher.group(1);
         }
 
-        return null; // Aucune image trouvée
+        return null;
     }
-    public String getContentEncoded() { return contentEncoded; }
 
-    // Méthode pour récupérer l'URL de l'image
     public String getImageUrl() {
         if (enclosure != null) {
             return enclosure.getUrl();
@@ -78,5 +98,48 @@ public class NewsItem {
             return mediaContentList.get(0).getUrl();
         }
         return null;
+    }
+
+    public boolean isInCategory(String cat) {
+        if (category == null || cat == null) return false;
+        return category.equalsIgnoreCase(cat);
+    }
+
+    // --- SETTERS (used when needed manually) ---
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setEnclosure(Enclosure enclosure) {
+        this.enclosure = enclosure;
+    }
+
+    public void setMediaContentList(List<MediaContent> mediaContentList) {
+        this.mediaContentList = mediaContentList;
+    }
+
+    public void setMediaThumbnail(MediaThumbnail mediaThumbnail) {
+        this.mediaThumbnail = mediaThumbnail;
+    }
+
+    public void setContentEncoded(String contentEncoded) {
+        this.contentEncoded = contentEncoded;
     }
 }

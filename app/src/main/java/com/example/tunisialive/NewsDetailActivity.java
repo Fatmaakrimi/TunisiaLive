@@ -1,10 +1,9 @@
 package com.example.tunisialive;
 
+
 import android.os.Bundle;
 import android.webkit.WebView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.tunisialive.R;
 
 public class NewsDetailActivity extends AppCompatActivity {

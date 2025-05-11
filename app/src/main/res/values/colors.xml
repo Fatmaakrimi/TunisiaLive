@@ -2,7 +2,24 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="light_gray"> #f2f3f4 </color>
-    <color name="dark_gray"> #ccd1d1 </color>
-    <color name="lavander">#42b4ff </color>
+    <color name="light_gray">#FFF2F3F4</color>
+    <color name="dark_gray">#FFCCD1D1</color>
+    <color name="facebook_blue">#1877F2</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="dark_blue">#32357a</color>
+    <color name="light_blue">#f2f1f6</color>
+    <color name="nav_item_selected">#FF42B4FF</color>
+    <color name="nav_item_default">#FF000000</color>
+    <color name="purple">#8858DF</color>
+    <color name="purple_500">#6200EE</color>
+    <color name="purple_700">#3700B3</color>
+    <color name="nav_item_color">#FF6200EE</color>
+    <color name="startColor">#5E35B1</color> <!-- Couleur de départ -->
+    <color name="endColor">#D0D5D7D5</color>   <!-- Couleur de fin -->
+    <color name="l">#FF888888</color>
+    <color name="colorBackground">#121212</color>
+
+
+
+
 </resources>

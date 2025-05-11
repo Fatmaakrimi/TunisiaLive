@@ -7,9 +7,9 @@
         android:title="Accueil"/>
 
     <item
-        android:id="@+id/nav_articles"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Articles"/>
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profil"
+        android:title="Profile"/>
 
     <item
         android:id="@+id/nav_settings"
@@ -23,5 +23,6 @@
     <item
         android:id="@+id/nav_logout"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
-        android:title="Déconnexion"/>
+    android:title="Déconnexion"/>
+
 </menu>

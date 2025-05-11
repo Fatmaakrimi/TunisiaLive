@@ -1,29 +1,26 @@
 package com.example.tunisialive;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ResourcesAdapter extends RecyclerView.Adapter<ResourcesAdapter.ViewHolder> {
+
     private List<Resource> resources;
     private Context context;
-    private SharedPreferences sharedPreferences;
 
-    public ResourcesAdapter(Context context, List<Resource> resources) {
+    public ResourcesAdapter(Context context, List<Resource> resources, PreferencesManager preferencesManager) {
         this.context = context;
         this.resources = resources;
-        sharedPreferences = context.getSharedPreferences("RSS_PREFS", Context.MODE_PRIVATE);
     }
 
     @NonNull
@@ -37,11 +34,44 @@ public class ResourcesAdapter extends RecyclerView.Adapter<ResourcesAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Resource resource = resources.get(position);
         holder.name.setText(resource.getName());
-        holder.checkbox.setChecked(resource.isSelected());
 
-        holder.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            resource.setSelected(isChecked);
-            saveSelectedResources();
+        // Set logo based on URL
+        String source = resource.getUrl().toLowerCase();
+        if (source.contains("mosaiquefm")) {
+            holder.logo.setImageResource(R.drawable.mosaique_logo);
+        } else if (source.contains("kapitalis")) {
+            holder.logo.setImageResource(R.drawable.kapitalis_logo);
+        } else if (source.contains("alchourouk")) {
+            holder.logo.setImageResource(R.drawable.alchourouk_logo);
+        } else if (source.contains("hakaekonline")) {
+            holder.logo.setImageResource(R.drawable.hakaekonline_logo);
+        } else if (source.contains("lapresse.tn")) {
+            holder.logo.setImageResource(R.drawable.lapresse_tn_logo);
+        } else if (source.contains("tuniscope")) {
+            holder.logo.setImageResource(R.drawable.tuniscope_logo);
+        } else if (source.contains("business")) {
+            holder.logo.setImageResource(R.drawable.businessnews_logo);
+        } else if (source.contains("tunisienumerique")) {
+            holder.logo.setImageResource(R.drawable.tunisienumerique_logo);
+        } else if (source.contains("leaders")) {
+            holder.logo.setImageResource(R.drawable.leader_logo);
+        } else if (source.contains("babnet")) {
+            holder.logo.setImageResource(R.drawable.babnet_logo);
+        } else if (source.contains("africanmanager")) {
+            holder.logo.setImageResource(R.drawable.africanmanager_logo);
+        } else if (source.contains("jawharafm")) {
+            holder.logo.setImageResource(R.drawable.jawharafm_logo);
+        } else if (source.contains("radioexpressfm")) {
+            holder.logo.setImageResource(R.drawable.expressfm_logo);
+        } else if (source.contains("arabesque")) {
+            holder.logo.setImageResource(R.drawable.arabesque_logo);
+        }
+        // Open resource articles activity on item click
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ResourceArticlesActivity.class);
+            intent.putExtra("RESOURCE_URL", resource.getUrl());
+            intent.putExtra("RESOURCE_NAME", resource.getName());
+            context.startActivity(intent);
         });
     }
 
@@ -50,26 +80,14 @@ public class ResourcesAdapter extends RecyclerView.Adapter<ResourcesAdapter.View
         return resources.size();
     }
 
-    private void saveSelectedResources() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Set<String> selectedUrls = new HashSet<>();
-        for (Resource resource : resources) {
-            if (resource.isSelected()) {
-                selectedUrls.add(resource.getUrl());
-            }
-        }
-        editor.putStringSet("SELECTED_RSS", selectedUrls);
-        editor.apply();
-    }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
-        CheckBox checkbox;
+        ImageView logo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.resource_name);
-            checkbox = itemView.findViewById(R.id.resource_checkbox);
+            logo = itemView.findViewById(R.id.resource_logo);
         }
     }
 }

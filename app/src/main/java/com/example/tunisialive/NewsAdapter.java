@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.tunisialive.NewsItem;
-import com.example.tunisialive.R;
 
 import java.util.List;
 
@@ -38,37 +36,34 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-        tdc=new TimeDifferenceCalculator();
+        tdc = new TimeDifferenceCalculator();
         NewsItem newsItem = newsList.get(position);
         holder.title.setText(newsItem.getTitle());
-        //holder.date.setText(newsItem.getPubDate().toString());
         holder.date.setText(tdc.getTimeDifferenceMessage(newsItem.getPubDate().toString()));
 
-        // Charger l'image de l'article si elle existe
         String imageUrl = newsItem.getImageUrl();
-        String imageFromDescription= newsItem.getImageUrlFromDescription();
+        String imageFromDescription = newsItem.getImageUrlFromDescription();
 
         if (imageUrl != null) {
             Log.d("Debug_image", imageUrl);
         } else {
             Log.d("Debug_image", "Image URL is null");
         }
-        if(imageFromDescription!=null)
-        {
+
+        if (imageFromDescription != null) {
             Glide.with(context)
                     .load(imageFromDescription)
-                    .placeholder(R.drawable.placeholder) // Image de chargement
-                    .error(R.drawable.image_not_found) // Image si erreur
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.image_not_found)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.newsImage);
             holder.newsImage.setVisibility(View.VISIBLE);
-            Log.d("ImageFromeDescription",imageFromDescription);
-        }
-       else if (imageUrl != null && !imageUrl.isEmpty()) {
+            Log.d("ImageFromeDescription", imageFromDescription);
+        } else if (imageUrl != null && !imageUrl.isEmpty()) {
             Glide.with(context)
                     .load(imageUrl)
-                    .placeholder(R.drawable.placeholder) // Image de chargement
-                    .error(R.drawable.image_not_found) // Image si erreur
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.image_not_found)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.newsImage);
             holder.newsImage.setVisibility(View.VISIBLE);
@@ -76,30 +71,29 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             holder.newsImage.setVisibility(View.GONE);
         }
 
-        // Déterminer la source et afficher le bon logo
         String source = newsItem.getLink();
-        Log.d("Debug_url",source);
+        Log.d("Debug_url", source);
         if (source.contains("mosaiquefm")) {
             holder.newsSourceLogo.setImageResource(R.drawable.mosaique_logo);
         } else if (source.contains("kapitalis")) {
             holder.newsSourceLogo.setImageResource(R.drawable.kapitalis_logo);
-        } else if(source.contains("alchourouk")){
+        } else if (source.contains("alchourouk")) {
             holder.newsSourceLogo.setImageResource(R.drawable.alchourouk_logo);
-        }else if(source.contains("hakaekonline")){
+        } else if (source.contains("hakaekonline")) {
             holder.newsSourceLogo.setImageResource(R.drawable.hakaekonline_logo);
-        }else if(source.contains("lapresse.tn")){
+        } else if (source.contains("lapresse.tn")) {
             holder.newsSourceLogo.setImageResource(R.drawable.lapresse_tn_logo);
-        }else if(source.contains("tuniscope")){
+        } else if (source.contains("tuniscope")) {
             holder.newsSourceLogo.setImageResource(R.drawable.tuniscope_logo);
-        }else if(source.contains("business")){
+        } else if (source.contains("business")) {
             holder.newsSourceLogo.setImageResource(R.drawable.businessnews_logo);
-        }else if(source.contains("tunisienumerique")){
+        } else if (source.contains("tunisienumerique")) {
             holder.newsSourceLogo.setImageResource(R.drawable.tunisienumerique_logo);
-        }else if (source.contains("leaders")){
+        } else if (source.contains("leaders")) {
             holder.newsSourceLogo.setImageResource(R.drawable.leader_logo);
-        }else if(source.contains("babnet")){
+        } else if (source.contains("babnet")) {
             holder.newsSourceLogo.setImageResource(R.drawable.babnet_logo);
-        }else if(source.contains("radioexpressfm")){
+        } else if (source.contains("radioexpressfm")) {
             holder.newsSourceLogo.setImageResource(R.drawable.expressfm_logo);
         } else if (source.contains("arabesque")) {
             holder.newsSourceLogo.setImageResource(R.drawable.arabesque_logo);
@@ -107,32 +101,24 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             holder.newsSourceLogo.setImageResource(R.drawable.almasdar_logo);
         } else if (source.contains("rassdtunisia")) {
             holder.newsSourceLogo.setImageResource(R.drawable.rass_logo);
-        } else if(source.contains("jawharafm")){
+        } else if (source.contains("jawharafm")) {
             holder.newsSourceLogo.setImageResource(R.drawable.jawharafm_logo);
-        } else if(source.contains("africanmanager")){
+        } else if (source.contains("africanmanager")) {
             holder.newsSourceLogo.setImageResource(R.drawable.africanmanager_logo);
-        } else if(source.contains("brands")){
+        } else if (source.contains("brands")) {
             holder.newsSourceLogo.setImageResource(R.drawable.brands_logo);
         }
 
-        // Ouvrir l’article complet sur clic
-        /*holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, NewsDetailActivity.class);
-            intent.putExtra("url", newsItem.getLink());
-            context.startActivity(intent);
-        });*/
         String content = (newsItem.getContentEncoded() != null && !newsItem.getContentEncoded().isEmpty())
                 ? newsItem.getContentEncoded()
                 : newsItem.getDescription();
 
-        // Ouvrir l'article dans une interface
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ArticleDetailActivity.class);
             intent.putExtra("title", newsItem.getTitle());
             intent.putExtra("date", newsItem.getPubDate());
-            intent.putExtra("content", content); // Assurez-vous que NewsItem a bien un getDescription()
+            intent.putExtra("content", content);
             intent.putExtra("url", newsItem.getLink());
-
             context.startActivity(intent);
         });
     }
@@ -141,6 +127,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public int getItemCount() {
         return newsList.size();
     }
+
+    // Existing method to update the list
     public void updateList(List<NewsItem> newList) {
         if (newList == null) {
             Log.e("DEBUG_ADAPTER", "La nouvelle liste est null !");
@@ -152,6 +140,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         notifyDataSetChanged();
     }
 
+    // ✅ New method to fix the missing 'setNewsList' error
+    public void setNewsList(List<NewsItem> newList) {
+        updateList(newList);
+    }
 
     static class NewsViewHolder extends RecyclerView.ViewHolder {
         TextView title, date;

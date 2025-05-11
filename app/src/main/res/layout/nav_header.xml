@@ -6,8 +6,10 @@
     android:padding="16dp"
     android:background="@android:color/darker_gray">
 
+
     <!-- Image de profil -->
     <ImageView
+
         android:id="@+id/profileImage"
         android:layout_width="80dp"
         android:layout_height="80dp"

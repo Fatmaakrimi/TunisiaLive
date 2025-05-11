@@ -14,16 +14,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Material Toolbar -->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/lavander"
+            android:background="@drawable/toolbar_gradient"
             android:elevation="4dp"
-            app:navigationIcon="@drawable/baseline_home_24"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
             app:title="Actualités"
-            app:titleTextColor="@android:color/black"/>
+            app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:titleTextColor="?android:textColorPrimary"
+            app:navigationIcon="@drawable/ic_menu_24dp" />
 
         <!-- NestedScrollView for better scrolling behavior with AppBar -->
         <androidx.core.widget.NestedScrollView
@@ -72,8 +74,9 @@
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:lineSpacingMultiplier="1.2"/>
+                        android:textColor="?attr/colorOnSurface"
+                        android:lineSpacingMultiplier="1.2" />
+
 
                     <!-- Date and Author -->
                     <LinearLayout
@@ -120,26 +123,30 @@
 
                     <!-- Like Button Group -->
                     <LinearLayout
-                        android:layout_width="90dp"
-                        android:layout_height="45dp"
+                        android:layout_width="75dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="0"
+                        android:layout_marginEnd="8dp"
                         android:background="@drawable/rounded_textview"
                         android:backgroundTint="@color/dark_gray"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <!-- Like Button -->
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/likeButton"
-                            android:layout_width="50dp"
-                            android:layout_height="18dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
                             android:backgroundTint="@android:color/transparent"
-                            android:drawableEnd="@drawable/baseline_thumb_up_24"
-                            android:drawablePadding="2dp"
-                            android:gravity="center"
-                            android:minWidth="50dp"
+                            android:minWidth="0dp"
+                            android:paddingHorizontal="8dp"
                             android:stateListAnimator="@null"
-                            android:textColor="@android:color/white"
-                            app:iconTint="@android:color/white" />
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            app:icon="@drawable/baseline_thumb_up_24"
+                            app:iconGravity="textStart"
+                            app:iconTint="@android:color/black" />
 
                         <!-- Divider -->
                         <View
@@ -153,53 +160,64 @@
                             android:id="@+id/likeCount"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:layout_weight="0.2"
                             android:gravity="center"
                             android:paddingHorizontal="6dp"
                             android:text="0"
-                            android:textColor="@android:color/white"
-                            android:textSize="14sp" />
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <!-- Read More Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/readMoreButton"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="61dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/dark_gray"
-                        android:drawableStart="@drawable/baseline_keyboard_double_arrow_right_24"
-                        android:drawablePadding="4dp"
-                        android:text="lire sur>>"
-                        android:layout_marginEnd="8dp"/>
-
+                        android:text="Lire sur "
+                        android:textColor="@android:color/black"
+                        android:textSize="8dp"
+                        app:icon="@drawable/baseline_keyboard_double_arrow_right_24"
+                        app:iconGravity="textStart"
+                        app:iconPadding="4dp"
+                        app:iconTint="@android:color/black" />
 
                     <!-- Comments Button -->
+
+                    <!-- Share Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/toggleCommentsButton"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="61dp"
                         android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
                         android:backgroundTint="@color/dark_gray"
-                        android:drawableStart="@drawable/baseline_comment_24"
-                        android:drawablePadding="4dp"
                         android:text="Comment"
-                        app:iconTint="@color/black"/>
-                    <!-- Share Button -->
+                        android:textColor="@android:color/black"
+                        android:textSize="8dp"
+                        app:icon="@drawable/baseline_comment_24"
+                        app:iconGravity="textStart"
+                        app:iconPadding="4dp"
+                        app:iconTint="@android:color/black" />
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/shareButton"
                         android:layout_width="40dp"
                         android:layout_height="45dp"
+                        android:backgroundTint="@color/dark_gray"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
                         android:padding="0dp"
                         android:gravity="center"
                         app:icon="@drawable/baseline_share_24"
-                        app:iconGravity="textStart"
                         app:iconTint="@android:color/black"
-                        android:backgroundTint="@color/dark_gray"
-                        android:layout_marginEnd="5dp"/>
+                        app:iconGravity="textStart"
+                        android:layout_marginEnd="5dp" />
+
                 </LinearLayout>
 
 
@@ -268,7 +286,7 @@
                     android:contentDescription="@string/send_comment"
                     app:icon="@drawable/baseline_comment_24"
                     app:iconTint="@android:color/white"
-                    app:backgroundTint="@color/lavander"/>
+                    app:backgroundTint="@color/purple"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

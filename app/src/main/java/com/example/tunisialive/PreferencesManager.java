@@ -1,8 +1,10 @@
 package com.example.tunisialive;
-
 import android.content.Context;
 import android.content.SharedPreferences;
-
+import java.util.HashSet;
+import java.util.Set;
+import android.content.Context;
+import android.content.SharedPreferences;
 import java.util.HashSet;
 import java.util.Set;
 

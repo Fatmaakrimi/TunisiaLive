@@ -59,7 +59,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
     private LinearLayout commentsContainer;
     private MaterialCardView commentInputCard;
     private boolean commentsVisible = false;
-
+    public String test_title,test_content,test_date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +93,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
         likeCount = findViewById(R.id.likeCount);
         commentInput = findViewById(R.id.commentInput);
         postCommentButton = findViewById(R.id.postCommentButton);
-
         shareButton = findViewById(R.id.shareButton);
         img_logo= findViewById(R.id.img_logo);
         // Initialize views for comments section
@@ -103,7 +102,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
         // Initialisation RecyclerView
         recyclerViewComments = findViewById(R.id.recyclerViewComments);
         recyclerViewComments.setLayoutManager(new LinearLayoutManager(this));
-
         commentList = new ArrayList<>();
         commentAdapter = new CommentAdapter(this, commentList);
         recyclerViewComments.setAdapter(commentAdapter);
@@ -114,8 +112,11 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
         Intent intent = getIntent();
         if (intent != null) {
             String title = intent.getStringExtra("title");
+            test_title=title;
             String date = intent.getStringExtra("date");
+            test_date=date;
             String content = intent.getStringExtra("content");
+            test_content=content;
             articleUrl = intent.getStringExtra("url");
 
             titleTextView.setText(title);
@@ -161,13 +162,19 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
         }else if(source.contains("arabesque")){
             img_logo.setImageResource(R.drawable.arabesque_logo);
         }
-
+        else {
+            Log.d("Debug_url", "No URL provided for the article");
+            // Set a default logo or handle the null case
+            img_logo.setImageResource(R.drawable.ic_launcher_foreground); // Use your default logo resource
+        }
 
         // Ouvrir l'article dans un navigateur lorsqu'on clique sur le bouton
+
         readMoreButton.setOnClickListener(view -> {
             if (articleUrl != null) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(articleUrl));
-                startActivity(browserIntent);
+                Intent browserintent = new Intent(this, BrowserActivity.class);
+                browserintent.putExtra("articleUrl",articleUrl);
+                startActivity(browserintent);
             }
         });
 

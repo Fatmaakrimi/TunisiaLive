@@ -13,5 +13,17 @@
         <item>Tuniscope</item>
         <item>BBC News</item>
     </string-array>
+    <string name="title_activity_account_bottom_sheet">AccountBottomSheet</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+        <!-- Add these strings -->
+        <string name="login">Se connecter</string>
+        <string name="sign_up">S\'inscrire</string>
+        <string name="account_settings">Paramètres du compte</string>
+        <string name="logout">Déconnexion</string>
+        <string name="profile_image">Photo de profil</string>
+
 
 </resources>
