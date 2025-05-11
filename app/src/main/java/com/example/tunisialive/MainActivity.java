@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private NewsAdapter articleAdapter;
     private List<NewsItem> articleList, filteredList;
+    private NavigationView navigationView;
+
 
 
 
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Initialisation du Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
 
+
         // Initialisation du DrawerLayout et de la Toolbar
         drawerLayout = findViewById(R.id.drawer_layout);
         // Ajout du bouton pour ouvrir le menu
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Mise à jour du profil utilisateur dans le header
         updateNavHeader(navigationView);
+
         // Observer les données du flux RSS
         viewModel.getNews().observe(this, newsList -> {
             Log.d("DEBUG_UI", "Mise à jour UI avec " + (newsList != null ? newsList.size() : 0) + " articles");
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+
     }
     private void updateNavHeader(NavigationView navigationView) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -119,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             userEmail.setText(user.getEmail());
         }
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -135,9 +141,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_logout) {
             // Déconnexion Firebase
             firebaseAuth.signOut();
-            //startActivity(new Intent(this, LoginActivity.class));
-            //finish();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+
+
         }
+
+
         if (item.getItemId() == R.id.nav_resources) {
             startActivity(new Intent(this, ResourcesActivity.class));
         }
@@ -146,6 +156,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void updateMenuItems() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        View headerView = navigationView.getHeaderView(0);
+        TextView userName = headerView.findViewById(R.id.userName);
+        TextView userEmail = headerView.findViewById(R.id.userEmail);
+        MenuItem logoutItem = navigationView.getMenu().findItem(R.id.nav_logout);
+
+        if (user != null) {
+            userName.setText(user.getDisplayName());
+            userEmail.setText(user.getEmail());
+            logoutItem.setTitle("Déconnexion");
+        } else {
+            userName.setText("");
+            userEmail.setText("");
+            logoutItem.setTitle("Connexion");
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -234,6 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         WorkManager.getInstance(this).enqueue(workRequest);
     }
 
-
-
 }
+
+
+

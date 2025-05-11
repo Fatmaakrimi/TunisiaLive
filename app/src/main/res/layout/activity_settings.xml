@@ -3,91 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    tools:context=".SettingsActivity">
+    tools:context=".SettingsActivity"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:background="?android:attr/windowBackground">
+        android:orientation="vertical">
 
-        <!-- Section title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Paramètres"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Mode sombre -->
-        <LinearLayout
+        <!-- Option 1 : Activer/Désactiver le mode sombre -->
+        <Switch
+            android:id="@+id/switchDarkMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_gravity="center"
-            android:paddingVertical="12dp">
+            android:text="Mode sombre" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mode sombre"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switchDarkMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <!-- Notifications -->
-        <LinearLayout
+        <!-- Option 2 : Activer les notifications -->
+        <Switch
+            android:id="@+id/switchNotifications"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_gravity="center"
-            android:paddingVertical="12dp">
+            android:text="Recevoir des notifications" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recevoir des notifications"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switchNotifications"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <!-- Source RSS -->
+        <!-- Option 3 : Sélection de la source RSS -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
             android:text="Source RSS"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="8dp" />
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/spinnerRssSource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:entries="@array/rss_sources" />
 
-        <!-- Enregistrer -->
+        <!-- Bouton Enregistrer -->
         <Button
             android:id="@+id/btnSaveSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enregistrer les paramètres"
-            android:textAllCaps="false"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="?attr/colorPrimary"
-            android:textColor="@android:color/white" />
+            android:layout_marginTop="20dp"
+            android:text="Enregistrer les paramètres" />
     </LinearLayout>
 </ScrollView>

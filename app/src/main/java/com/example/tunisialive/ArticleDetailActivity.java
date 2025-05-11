@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +37,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ArticleDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView titleTextView, dateTextView,commentsList, likeCount;
@@ -50,6 +55,10 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
     private RecyclerView recyclerViewComments;
     private CommentAdapter commentAdapter;
     private List<Comment> commentList;
+    private MaterialButton toggleCommentsButton;
+    private LinearLayout commentsContainer;
+    private MaterialCardView commentInputCard;
+    private boolean commentsVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +96,10 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
 
         shareButton = findViewById(R.id.shareButton);
         img_logo= findViewById(R.id.img_logo);
+        // Initialize views for comments section
+        toggleCommentsButton = findViewById(R.id.toggleCommentsButton);
+        commentsContainer = findViewById(R.id.commentsContainer);
+        commentInputCard = findViewById(R.id.commentInputCard);
         // Initialisation RecyclerView
         recyclerViewComments = findViewById(R.id.recyclerViewComments);
         recyclerViewComments.setLayoutManager(new LinearLayoutManager(this));
@@ -167,8 +180,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
             }else {
                 //save_like_dislike(articleUrl);
             }
-            /*likeCounter++;
-            likeCount.setText(String.valueOf(likeCounter));*/
+            likeCounter++;
+            likeCount.setText(String.valueOf(likeCounter));
         });
         db = FirebaseFirestore.getInstance();
 
@@ -200,7 +213,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
             startActivity(Intent.createChooser(shareIntent, "Partager via"));
         });
 
-
+// Set up comments button click listener
+        toggleCommentsButton.setOnClickListener(v -> toggleCommentsVisibility());
 
     }
 
@@ -249,6 +263,24 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
                 });
 
     }
+    private void toggleCommentsVisibility() {
+        commentsVisible = !commentsVisible;
+
+        if (commentsVisible) {
+            commentsContainer.setVisibility(View.VISIBLE);
+            commentInputCard.setVisibility(View.VISIBLE);
+        } else {
+            commentsContainer.setVisibility(View.GONE);
+            commentInputCard.setVisibility(View.GONE);
+        }
+
+        // Change button icon/text based on state
+        toggleCommentsButton.setCompoundDrawablesWithIntrinsicBounds(
+                commentsVisible ? R.drawable.baseline_comment_24 : R.drawable.baseline_comment_24,
+                0, 0, 0
+        );
+    }
+
 
     private void loadComments_adapter(String articleId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -283,7 +315,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
     }
 
     private String load_like_dislike(String articleId){
-        String like="0";
+        AtomicReference<String> like= new AtomicReference<>("0");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             articleId = Base64.getEncoder().encodeToString(articleUrl.getBytes());
         }
@@ -301,13 +333,13 @@ public class ArticleDetailActivity extends AppCompatActivity implements Navigati
                                  likeNumber = documentSnapshot.getLong("like_number");
                         long dislikeNumber = documentSnapshot.getLong("dislike_number");
                         // Afficher les likes et dislikes dans votre UI
-                       //like=Long.toString(likeNumber);
+                       //like.set(Long.toString(likeNumber));
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Erreur lors de la récupération des données", e);
                 });
-        return like;
+        return like.get();
 
     }
     private void updateNavHeader(NavigationView navigationView) {

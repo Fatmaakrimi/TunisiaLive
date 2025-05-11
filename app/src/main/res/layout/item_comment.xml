@@ -39,5 +39,11 @@
             android:text="Contenu du commentaire"
             android:textColor="#333"
             android:textSize="14sp" />
+        <TextView
+            android:id="@+id/textTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
     </LinearLayout>
 </LinearLayout>
